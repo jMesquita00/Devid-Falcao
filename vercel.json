@@ -1,11 +1,9 @@
+
 {
-  "builds": [
-    {
-      "src": "client/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    { "src": "/", "dest": "/client/index.html" }
+  "version": 2,
+  "public": true,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
