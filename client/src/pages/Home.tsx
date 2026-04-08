@@ -13,15 +13,57 @@ export default function Home() {
   const [contactForm, setContactForm] = useState({ name: "", phone: "", email: "" });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setSubmitted(true);
+  //   setTimeout(() => {
+  //     setContactForm({ name: "", phone: "", email: "" });
+  //     setSubmitted(false);
+  //   }, 3000);
+  // };
+
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setContactForm({ name: "", phone: "", email: "" });
-      setSubmitted(false);
-    }, 3000);
+    
+    // 1. Dados para envio
+    const leadData = {
+      name: contactForm.name,
+      phone: contactForm.phone,
+      email: contactForm.email,
+      date: new Date().toLocaleString("pt-BR"),
+    };
+
+    try {
+      // OPCIONAL: Enviar para uma planilha ou serviço de e-mail
+      // await fetch('SUA_URL_AQUI', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(leadData)
+      // });
+
+      setSubmitted(true);
+
+      // 2. Lógica do WhatsApp
+      const mensagem = `Olá David! Meu nome é ${leadData.name}. Acabei de me cadastrar no site e quero agendar meu treino experimental!`;
+      const urlWhats = `https://wa.me/5599991806569?text=${encodeURIComponent(mensagem)}`;
+      
+      // Abre o WhatsApp em uma nova aba
+      window.open(urlWhats, "_blank");
+
+      // 3. Reset do formulário após 3 segundos
+      setTimeout(() => {
+        setContactForm({ name: "", phone: "", email: "" });
+        setSubmitted(false);
+      }, 3000);
+
+    } catch (error) {
+      alert("Erro ao enviar contato. Por favor, tente novamente.");
+    }
   };
 
+  
   return (
     <div className="min-h-screen bg-white text-black">
       {/* ===== HEADER / NAVIGATION ===== */}
@@ -44,10 +86,20 @@ export default function Home() {
               Contato
             </a>
           </nav>
-          <Button className="bg-yellow-400 text-black hover:bg-yellow-500 font-bold">
+          {/* <Button className="bg-yellow-400 text-black hover:bg-yellow-500 font-bold">
             <Phone className="w-4 h-4 mr-2" />
             Ligar
-          </Button>
+          </Button> */}
+          <a 
+            href="https://wa.me/5599991806569?text=Olá,%20quero%20saber%20mais%20sobre%20a%20academia!" 
+            target="_blank" 
+            rel="noopener noreferrer">
+            <Button className="bg-yellow-400 text-black hover:bg-yellow-500 font-bold">
+              <Phone className="w-4 h-4 mr-2" />
+              Ligar
+            </Button>
+          </a>
+
         </div>
       </header>
 
