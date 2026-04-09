@@ -4,12 +4,8 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-  "dev": "vite --host",
-  "build": "vite build", 
-  "start": "vite preview",
-  "preview": "vite preview --host",
-  "check": "tsc --noEmit",
-  "format": "prettier --write ."
+  "build": "vite build",
+  "install": "pnpm install"
 },
   
   "dependencies": {
